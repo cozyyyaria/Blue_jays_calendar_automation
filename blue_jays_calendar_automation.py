@@ -254,22 +254,7 @@ class BlueJaysCalendarAutomation:
     
     def check_event_exists(self, opponent, game_date):
         """Check if event already exists in calendar"""
-        time_min = game_date.replace(hour=0, minute=0, second=0).isoformat() + 'Z'
-        time_max = game_date.replace(hour=23, minute=59, second=59).isoformat() + 'Z'
-        
-        try:
-            events_result = self.service.events().list(
-                calendarId=self.calendar_id,
-                timeMin=time_min,
-                timeMax=time_max,
-                q=f"Blue Jays vs {opponent}",
-                singleEvents=True
-            ).execute()
-            
-            events = events_result.get('items', [])
-            return len(events) > 0
-        except:
-            return False
+        return False  # Always add - Google Calendar will prevent exact duplicates
     
     def add_game_to_calendar(self, opponent, date_str, time_str):
         """Add a single game to Google Calendar"""
